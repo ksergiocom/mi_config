@@ -28,7 +28,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -i ~/Pictures/Wallpapers/punpun.png -tf -c 000000 --nofork
+#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -tf --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -55,7 +55,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#777777' -sf '#EEEEEE' -fn 'monospace-10' -p 'dmenu prompt &gt;'
+bindsym $mod+d exec "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#777777' -sf '#EEEEEE' -fn 'monospace-10'
 # A more modern dmenu replacement is rofi:
 # bindsym $mod+d exec "rofi -show run" 
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -117,7 +117,7 @@ bindsym $mod+a focus parent
 set $ws1 "1 - Terminal"
 set $ws2 "2 - Browser"
 set $ws3 "3 - VSCode"
-set $ws4 "4"
+set $ws4 "4 - Github"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
@@ -155,6 +155,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -220,6 +221,13 @@ gaps outer 0
 
 # i3lock - bloquear la ventana
 bindsym Control+$mod+i exec i3lock -i ~/Pictures/Wallpapers/punpun.png -tf -c 000000
+
+# Configuracion para abrir algunos programas directamente en su workspace
+assign [class="Alacritty"] $ws1
+assign [class="firefox"] $ws2
+assign [class="Code"] $ws3
+assign [class="GitHub Desktop"] $ws4
+
 
 # Ejecutar al inciar
 #exec alacritty
