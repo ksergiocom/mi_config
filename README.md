@@ -1,4 +1,3 @@
-# Mi configuracion
-
-depende de:
-  - neofetch
+apt install \
+i3 \
+neofetch

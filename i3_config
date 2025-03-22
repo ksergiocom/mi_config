@@ -21,18 +21,18 @@ font pango:monospace 8
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
-# exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id dex --autostart --environment i3
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -tf --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
-# exec --no-startup-id nm-applet
+exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -49,15 +49,15 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id  alacritty 
+bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id  "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#777777' -sf '#EEEEEE' -fn 'monospace-10'
+bindsym $mod+d exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
-# bindsym $mod+d exec "rofi -show run" 
+# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
@@ -114,10 +114,10 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1 - Terminal"
-set $ws2 "2 - Browser"
-set $ws3 "3 - VSCode"
-set $ws4 "4 - Github"
+set $ws1 "1 - Terminales"
+set $ws2 "2 - Principal"
+set $ws3 "3 - Navegador"
+set $ws4 "4 - IDEs"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
@@ -154,8 +154,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Shift+e exec i3-msg exit
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -187,48 +186,45 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
-				position top
-				  colors {
-  				  background #000000
-    				statusline #FFFFFF
-    				separator  #666666
+    status_command i3status
+    position top
+    colors {
+        background #000000
+        statusline #FFFFFF
+        separator  #666666
 
-    				focused_workspace  #F4F4F4 #F4F4F4 #000000
-    				active_workspace   #333333 #222222 #FFFFFF
-    				inactive_workspace #333333 #222222 #888888
-    				urgent_workspace   #2F343A #900000 #FFFFFF
-    				binding_mode       #2F343A #900000 #FFFFFF
-  				}
-    
-   
-  
+        focused_workspace  #F4F4F4 #F4F4F4 #000000
+        active_workspace   #333333 #222222 #FFFFFF
+        inactive_workspace #333333 #222222 #888888
+        urgent_workspace   #2F343A #900000 #FFFFFF
+        binding_mode       #2F343A #900000 #FFFFFF
+    }
+
 }
 
-# Colores Custom!
-# class                 border  bground text    indicator child_border
+# Agregar un fondo de pantall (asegurate de tener feh -> apt install feh)
+exec --no-startup-id feh --bg-scale /home/sergio/Pictures/bg.jpg
+
+# Gaps (ya no es necesario tener i3-gaps instalado, viene por defecto con i3)
+gaps inner 25px
+
+# Paleta de color personalizada
+# Colores de las ventanas
 client.focused          #777777 #EEEEEE #000000 #C1C1C1   #777777
 client.focused_inactive #333333 #5F676A #FFFFFF #484E50   #5F676A
 client.unfocused        #333333 #222222 #888888 #292D2E   #222222
 client.urgent           #2F343A #900000 #FFFFFF #900000   #900000
 client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
 
-client.background       #FFFFFF
-
-# Gaps custom
-gaps inner 30
-gaps outer 0
-
-# i3lock - bloquear la ventana
-bindsym Control+$mod+i exec --no-startup-id  i3lock -i ~/Pictures/Wallpapers/punpun.png -tf -c 000000
 
 # Configuracion para abrir algunos programas directamente en su workspace
 assign [class="Alacritty"] $ws1
-assign [class="firefox"] $ws2
-assign [class="Code"] $ws3
-assign [class="GitHub Desktop"] $ws4
+assign [class="Gnome-terminal"] $ws1
+assign [class="firefox"] $ws3
+assign [class="google-chrome"] $ws3
+assign [class="Google-chrome"] $ws3
+assign [class="Code"] $ws4
+assign [class="GitHub Desktop"] $ws2
 
-
-# Ejecutar al inciar
-#exec alacritty
-exec_always --no-startup-id feh  --bg-scale ~/Pictures/Wallpapers/punpun-museo-oscuro.jpg
+# Lock de screen con una fotito de punpun
+bindsym Control+$mod+i exec --no-startup-id  i3lock -i /home/sergio/Pictures/punpun.png -tf -c 000000
