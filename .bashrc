@@ -1,11 +1,18 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-# If not running interactively, don't do anything
+
+################################################
+# Mi Config! ###################################
 
 neofetch --ascii /home/sergio/Pictures/ascii
 echo "¡Hagamos cosas!"
 
+################################################
+
+
+
+# If not running interactively, don't do anything
 case $- in
     *i*) ;;
       *) return;;
@@ -61,6 +68,8 @@ fi
 
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+		# Sobre escribo el prompt por defecto
+		PS1='\[\e[91m\]\u\[\e[0m\]:\[\e[38;5;246m\]\w\[\e[0m\]\\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -120,4 +129,18 @@ if ! shopt -oq posix; then
 fi
 
 
-#export PS1='\[\e]0;UBU - \d - \t - \u@\h - \[$(history|tail -2) \w\a${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH
+
+# Laravel
+export PATH=$HOME/.config/composer/vendor/bin:$PATH
+
+# Andriod Studio
+export PATH=/home/sergio/Desktop/UBU/HM/android-studio/bin:$PATH
+
+# Eclipse
+export PATH=/home/sergio/eclipse/java-2024-06/eclipse:$PATH
